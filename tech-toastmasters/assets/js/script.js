@@ -10,8 +10,13 @@ const nextBtn = document.getElementById('nextBtn');
 const closeBtn = document.getElementById('closeBtn');
 const bookCover = document.getElementById('bookCover');
 
-// Start the animation
-bookCover.addEventListener('click', () => {
+// Event Listeners
+bookCover.addEventListener('click', startExperience);
+nextBtn.addEventListener('click', goNext);
+prevBtn.addEventListener('click', goPrev);
+closeBtn.addEventListener('click', closeBook);
+
+function startExperience() {
     scene.classList.add('zoom-active');
     setTimeout(() => {
         book.classList.add('is-open');
@@ -20,7 +25,7 @@ bookCover.addEventListener('click', () => {
         curPage = 1;
         updateButtons();
     }, 500);
-});
+}
 
 function flipPage(num) {
     const el = document.getElementById(`p${num}`);
@@ -32,15 +37,15 @@ function unflipPage(num) {
     if(el) el.classList.remove('flipped');
 }
 
-nextBtn.addEventListener('click', () => {
+function goNext() {
     if (curPage < totalPages) {
         flipPage(curPage);
         curPage++;
         updateButtons();
     }
-});
+}
 
-prevBtn.addEventListener('click', () => {
+function goPrev() {
     if (curPage > 1) {
         curPage--;
         unflipPage(curPage);
@@ -48,9 +53,7 @@ prevBtn.addEventListener('click', () => {
     } else if (curPage === 1) {
         closeBook();
     }
-});
-
-closeBtn.addEventListener('click', closeBook);
+}
 
 function updateButtons() {
     prevBtn.disabled = (curPage === 0);
